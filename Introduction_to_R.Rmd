@@ -1,0 +1,192 @@
+---
+title: "Introduction to R"
+author: "Okan Sarioglu <br> Leon Siefken"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    css: css/lab.css
+  pdf_document:
+    toc: yes
+  html_notebook:
+    toc: true
+    toc_float: true
+    css: css/lab.css
+---
+
+## 1. Welcome to this R Course
+
+### 1.1 Let's start with a quick introduction round
+
+-   Your Name
+-   Your current study programme
+-   Motivation for this course
+
+### 1.2 Prerequisities
+
+- `R` and RStudio 
+- Access to Ilias 
+
+### What is `R` and `RStudio`
+
+`R` is a programming language specifically developed for statistical analysis. `RStudio` is a nice graphical interface to work with R. 
+
+### 1.3 Why `R` ? 
+
++ Free of cost and open-source 
++ Functionalities for all steps of research process from Data Collection to
+Data Analysis
++ Programming language specifically developed for statistical analysis 
++ Very active Community: 
+ + e.g. `R` community on [StackOverflow] (https://stackoverflow.blog/2017/10/10/impressive-growth-r/)
+ + e.g. *#rstats* on twitter
+
+### 1.4 What expects you and what not 
+
+In this course you will learn: 
+
++ To get familiar with `R` and its basic language 
++ Core commands from the tidyverse package 
++ Data Wrangling, Data Bridging, Data Munging, Data Manipulation 
++ An efficient Workflow 
++ A brief introduction into core Datasets of Political Science 
+
+You will **not** learn: 
+
++ Data Analysis (QM and AQM) 
++ Advanced R usage (Webscraping, Quantitative Text Analysis etc...)  
+
+### 1.5 Overview of the course structure: 
+
+**1. The R enviornment** 
+
+ + Basic Functionality (Calculations, Vectors, Matrices, Lists)
+ + Object classes 
+ + Accessing, Subsetting and Naming Objects
+ 
+**2. Data Manipulation** 
+
+ + Pipelines or Piping 
+ + The tidyverse - Dplyr 
+ + Loading and Storing Data 
+ + Ordering your Data: Renaming, Re-Ordering, Subsetting and Selecting 
+ + Transforming Variables 
+ + Merging Data 
+ + Missing Values 
+ 
+**3. Exploratory Data Analysis/Descriptives** 
+
+ + Summary Statistics - the Psych package 
+ + Frequency Tables 
+ + Cross-Tabulations, Correlation Matrice 
+ 
+**4. Data Visualization** 
+
+ + The Tidyverse - ggplot 2 
+ + Constructing Plots 
+ + Plotting anything 
+
+**5. R Programming** 
+
+ + For Loops 
+ + Functions
+
+
+
+
+## 2. Getting familiar with RStudio and establishing a Workflow 
+
+### 2.1 The user interface 
+
+RStudio has four main components and each of them has a purpose: 
+
+![**Figure 1: Standard RStudio Interface**](images/example1.jpeg)
+
+
+
++ **On the top left** you can see the **Source** window. In this window you write and run your code. The console opens after you choose, which type of Script you want to use: 
+
+ + The standard **R Script** (`Ctrl + Shift + N`): In this file you can just write your code and run it. You can also make commenting lines with putting a `#` in front of it. 
+ 
+ + The **R Markdown File**: In contrast to the standard **R Script** not everything written in a **R Markdown File** is automatically considered as Code (if not written after an `#`). A **R Markdown File** has options to design an HTML Output and a PDF Output. This can increase your efficiency in terms of working with partners. Further, you can write your code in **chunks** and have plenty options to work with those **chunks**.
+ In QM and AQM you will exclusively use **R Markdown** and over time you will see the advantages of R Markdown.
+ 
+
++ **On the top right** you can see the **Environment**. Here you have an overview over all the objects currently loaded in your environment. You will learn more about objects later in the course.
+ 
++ **On the bottom left** you have the **Console**: This is where the results appear once you execute your R-code. You can also directly type R-code into the console and execute it. However, we cannot save this code which is why we usually work in the Editor.
+
++ **On the bottom right** you can see the **Output**: Plots (if you use the standard R Script) and other things will appear here, don't worry too much about it for the moment.
+
+
+### 2.2 How to design it according to your preferences 
+
++ You can change the appearance of `RStudio`: `Tools > Global Options > Appearance`. Here you can change the zoom of the Console, the font size of the your letters and the style of your code. Further, you can change RStudio to a dark theme. Play around with it and find out how it is the most comfortable for you and of course you can change it over time.
+
++ You can change the **Pane Layout** meaning where the four components of RStudio should be: `RStudio`: `Tools > Global Options > Pane Layout`. 
+
++ You should use key shortcuts. There are pre-installed short-cuts of RStudio, which are really helpful. You should get familiar with them. `Tools > Key Shortcut Helps` or directly with `Ctrl + Shift + K`. You can add your own Key Shortcuts and we will do that in this course.  
+
+### 2.3 R Projects 
+
++ A **R project** is a efficient way of storing your code, files and data. It makes it easier to work with others (especially when using GitHub). It makes things easier. When you open a file, you should always first open the **R project** and then in your **Output**, in **Files** your script. Also for cooperation it is advantageous, because **R projects** include everything necessary to replicate the R file. 
+
+
+
+## 3. Lets get started: R as a fancy calculator 
+
+```{r}
+
+#You can use hashtags to comment
+
+1 + 1 #Addition
+
+1 - 1 #Substraction
+
+1 * 1 #Multiplication 
+
+1 / 1 #Division
+
+2^(1 / 2) #Mixed Terms
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
