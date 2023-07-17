@@ -15,6 +15,8 @@ output:
     css: css/lab.css
 ---
 
+# Chapter 1: Introduction into Fundamentals in R
+
 ## 1. Welcome to this R Course
 
 ### 1.1 Let's start with a quick introduction round
@@ -89,6 +91,7 @@ You will **not** learn:
 
 **5. R Programming** 
 
+ + Apply Function
  + For Loops 
  + Functions
 
@@ -381,7 +384,7 @@ dim(matrix_example) #Overall dimensions
 
 ### 3.6 Data Frames 
 
-Data Frames are more useful than matrices, since they are able to contain objects with different classes of objects: 
+Data Frames are more useful than matrices, since they are able to contain objects with different classes: 
 
 ```{r}
 
@@ -401,18 +404,223 @@ df_example$country #You tell R to use the data frame "df_Example" and with the d
 
 ```
 
+## 4. The `ifelse()` function and `ifelse` conditions:
 
+One of the most frequently used and therefore most important logical operators in programming in general are `ifelse` commands. You probably know them from Excel, but every programming language includes them, because of their usefulness. A quick reminder of their logic.
 
-## Exercise Section: 
+### 4.1 Simple if command 
+
+![**Figure 2: Standard RStudio Interface**](images/r-if-statement.jpg)
+This is the logic of a simple **if statement**. If a test expression is met, then the body of it (logical consequence) should happen
 
 ```{r}
+
+grade <- 1.7 
+
+if(grade < 2) {
+  print("Good Job")
+} # You write down if(test expression), and then the {body expression}, thus the body expression in fancy brackets.
+
+grade <- 2.5 
+
+if(grade2 < 2) {
+  print("Good Job")
+} #Since the condition is not met, nothing happens
+
+```
+
+### 4.2 ifelse command 
+
+An if command on its own is quite useless, things get interesting, when we also have a body for the else command:
+
+![**Figure 3: Standard RStudio Interface**](images/r-if-else-statement_2.jpg)
+
+Now we just add a **body of else** into the equation, in R that means we need to define it
+
+```{r}
+
+grade <- 3.3
+
+if (grade3 <= 2) {
+  print("Good Job")
+} else {
+  print("Life goes on")
+} #You add an else command and {Body expression else}, thus the body expression of else in fancy brackets 
+
+grade <- 1.3 
+
+if (grade <= 2) {
+  print("Good Job")
+} else {
+  print("Life goes on")
+}
+
+
+
+```
+
+What you see above is a classic ifelse condition, but R has a base R function called ifelse(), which does the same thing as the function above 
+
+```{r}
+ifelse(grade <=2, "Good Job", "Life goes on") #The command is called ifelse() ==> ifelse(test expression, body expression if, body expression else). It does not look so fancy as the if else condition tho 
+```
+
+
+### 4.3 if else ladders/ if else with multiple conditions
+
+Of course not every operations requires a dichotomous operation, so what we need are if else commands with multiple conditions: 
+
+```{r}
+
+grade <- 1.0 
+
+if (grade == 1.0) {
+  print("Amazing") 
+} else if (grade > 1.0 & grade <= 2.0) {
+  print("Good Job")
+} else if (grade > 2.0 & grade <= 3.0) {
+  print("OK")
+} else if (grade > 3.0 & grade <= 4.0) {
+  print("Life goes on")
+} #You just need to add another if function into the body expression of the first else body expression: 
+
+# if (test expression) { body expression if } else if(test expression 2) { body expression if} etc...
+
+  
+grade <- 2.7
+
+if (grade == 1.0) {
+  print("Amazing") 
+} else if (grade > 1.0 & grade <= 2.0) {
+  print("Good Job")
+} else if (grade > 2.0 & grade <= 3.0) {
+  print("OK")
+} else if (grade > 3.0 & grade <= 4.0) {
+  print("Life goes on")
+} 
+
+grade <- 3.3
+
+if (grade == 1.0) {
+  print("Amazing") 
+} else if (grade > 1.0 & grade <= 2.0) {
+  print("Good Job")
+} else if (grade > 2.0 & grade <= 3.0) {
+  print("OK")
+} else if (grade > 3.0 & grade <= 4.0) {
+  print("Life goes on") 
+}
+
+```
+Again we can do so-called **nested ifelse function**, using the `ifelse` command:
+
+```{r}
+
+grade <- 1.7
+
+ifelse(grade == 1.0, "Amazing", 
+       ifelse(grade > 1 & grade <= 2, "Good Job", 
+              ifelse(grade > 2 & grade <= 3, "OK", 
+                     ifelse(grade < 3, grade <=4, "Life goes on"))))
+
+grade <- 3.3 
+
+ifelse(grade == 1.0, "Amazing", 
+       ifelse(grade > 1 & grade <= 2, "Good Job", 
+              ifelse(grade > 2 & grade <= 3, "OK", 
+                     ifelse(grade < 3, grade <=4, "Life goes on"))))
+
+# The same logic: ifelse(test expression, body expression if, ifelse(test expression 2, body expression if 2)) etc..
 
 ```
 
 
+## Exercise Section: 
+
+### Exercise 1: Create a vector called `my_vector` with the values 1,2,3 and check is classe.
+
+```{r}
+
+my_vector <- c(1,2,3)
+
+class(my_vector)
+```
+
+### Exercise 2: Create a Matrix called `student`. This should contain information about the `name`, `age` and `major`. Make three vectors and bind them together to a the matrix `student`. Print the matrix. 
+
+```{r}
+
+name <- c("Sören", "Fatma", "Klaus", "Fidelius", "Sven") 
+age  <- c(18, 22, 21, 19, 28) 
+major <- c("Political Science", "Law", "Buisness Administration",
+           "Philosophy", "Law")
+
+student <- cbind(name, 
+                 age,
+                 major)
+
+print(student)
+
+```
+
+### Exercise 3: Write an if-else statement that checks if a given number is positive or negative. If the number is positive, print "Number is positive", otherwise print "Number is negative". Feel free to decide if you want to use the ifelse function or the ifelse condition.
+
+```{r}
+
+#ifelse() function
+
+number <- -4
+
+ifelse(number > 0, "Positive Number", "Negative Number")
+
+#ifelse condition 
+
+if (number > 0) {
+  print("Positive Number")
+} else {
+  print("Negative Number")
+}
 
 
+```
 
+
+### Exercise 6: Write an if-else ladder that categorizes a student's grade based on their score. The grading criteria are as follows:
+
+Score >= 90: "A"
+Score >= 80 and < 90: "B"
+Score >= 70 and < 80: "C"
+Score >= 60 and < 70: "D"
+Score < 60: "F"
+
+```{r}
+
+#ifelse() function 
+
+score <- 78
+
+ifelse(score >= 90, "A", 
+       ifelse (score >= 80 & score < 90, "B", 
+               ifelse(score >= 70 & score < 80, "C",
+                      ifelse(score >= 60 & score < 70, "D",
+                             ifelse(Score < 60, "F")))))
+
+#ifelse condition 
+
+if (score >= 90) {
+  print("A") 
+} else if (score >= 80 & score < 90) {
+  print("B")
+} else if (score >= 70 & score < 80) {
+  print("C")
+} else if (score >= 60 & score < 70) {
+  print("D") 
+} else if (score < 60) {
+  print("F")
+}
+
+
+```
 
 
 

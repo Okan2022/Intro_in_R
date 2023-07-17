@@ -1,0 +1,344 @@
+---
+title: "Introduction to R"
+author: "Okan Sarioglu <br> Leon Siefken"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    css: css/lab.css
+  pdf_document:
+    toc: yes
+  html_notebook:
+    toc: true
+    toc_float: true
+    css: css/lab.css
+---
+
+# Chapter 05: Loops and Functions
+
+For our last chapter I want to introduce to a way to work more efficient. R is a programming language for statistical analysis, but it also includes classical elements of programming. Two main operations are loops and functions. We can automate tasks and the earlier you learn about it the faster you can advance and understand the logic of R. 
+
+
+## 1. Loops 
+
+For example, you can use a loop to iterate through a list of numbers and perform calculations on each number, or to go through the rows of a dataset and apply certain operations to each row. Loops provide a way to streamline your code and avoid writing repetitive instructions manually.
+
+There are different type of Loops, but for this course we focus just on the `for` loops, since you will see them also in the QM Tutorial. 
+
+### 1.2 `For` loops 
+
+Do you remeber my grade example from the first chapter? 
+
+```{r}
+
+grade <- 1.7
+
+if (grade == 1.0) {
+  print("Amazing") 
+} else if (grade > 1.0 & grade <= 2.0) {
+  print("Good Job")
+} else if (grade > 2.0 & grade <= 3.0) {
+  print("OK")
+} else if (grade > 3.0 & grade <= 4.0) {
+  print("Life goes on") 
+}
+
+grade <- 3.3
+
+if (grade == 1.0) {
+  print("Amazing") 
+} else if (grade > 1.0 & grade <= 2.0) {
+  print("Good Job")
+} else if (grade > 2.0 & grade <= 3.0) {
+  print("OK")
+} else if (grade > 3.0 & grade <= 4.0) {
+  print("Life goes on") 
+}
+
+grade <- 4.0
+
+if (grade == 1.0) {
+  print("Amazing") 
+} else if (grade > 1.0 & grade <= 2.0) {
+  print("Good Job")
+} else if (grade > 2.0 & grade <= 3.0) {
+  print("OK")
+} else if (grade > 3.0 & grade <= 4.0) {
+  print("Life goes on") 
+}
+
+grade <- 2.3
+
+if (grade == 1.0) {
+  print("Amazing") 
+} else if (grade > 1.0 & grade <= 2.0) {
+  print("Good Job")
+} else if (grade > 2.0 & grade <= 3.0) {
+  print("OK")
+} else if (grade > 3.0 & grade <= 4.0) {
+  print("Life goes on") 
+}
+
+grade <- 1.7
+
+if (grade == 1.0) {
+  print("Amazing") 
+} else if (grade > 1.0 & grade <= 2.0) {
+  print("Good Job")
+} else if (grade > 2.0 & grade <= 3.0) {
+  print("OK")
+} else if (grade > 3.0 & grade <= 4.0) {
+  print("Life goes on") 
+}
+
+```
+
+I could now write down all my grades and assign them as I did in the first chapter, but there is a way to automatize this process. For that I will use the `For` loop. 
+
+First, let us make a vector with grades: 
+
+```{r}
+
+grades <- c(1.7, 3.3, 4.0, 2.3, 1.0)
+
+```
+
+Now, we can directly dive into the loop. 
+
++ Write down `for` and in brackets you define the **loop iterator**, this is the **i** in the loop. Then you define in which object of interest you want to iterate. In our case, the operation should be iterated in the grades vector. I could also write down the number 5, but it is convention to define an object. Why? 
+
++ After closing the brackets you open fancy brackets and write down your function, as you would normally, but this time you need to define how the iterator is used. Since I use the numbers in grades, my iterator needs to be put in brackets, after the name of the grades. Why? 
+
++ And that's it basically 
+
+
+```{r}
+
+for (i in 1:length(grades)) {
+  if (grades[i] == 1.0) {
+  print("Amazing") 
+} else if (grades[i] > 1.0 & grades[i] <= 2.0) {
+  print("Good Job")
+} else if (grades[i] > 2.0 & grades[i] <= 3.0) {
+  print("OK")
+} else if (grades[i] > 3.0 & grades[i] <= 4.0) {
+  print("Life goes on") 
+}
+  
+}
+
+```
+
+Loops can look differently: 
+
+In this example I have a number vector and my let the console print a sentence, where I vary the number and therefore the sentence changes over every loop
+
+```{r}
+
+num <- c(3, 43, 113, 143, 171, 249)
+
+for (i in num) { 
+  print(stringr::str_c("This is the ", i, "th Iteration")) 
+}
+
+
+```
+
+
+### 1.2 Nested Loops 
+
+Becuase you will eventually encouter them, I will show you shortly nested loops: 
+
+First, let us play a game of tic tac toe: 
+
+```{r}
+
+#Defining a matrix 
+ttt <- matrix(c("X", "O", "X",
+                "O", "X", "O",
+                "O", "X", "O"), nrow = 3, ncol = 3, byrow = TRUE)
+
+```
+
+
+We define a loop with an iterator **i** for the rows of the matrix, and we define another one for the columns with the iterator **j**. 
+
+Afterwords, we built up the body, in which aim to get information about the matrix and its content. The sentence shows, which rows and columns contain which values. 
+
+```{r}
+
+for (i in 1:nrow(ttt)) {
+  for (j in 1:ncol(ttt)) {
+    print(paste("On row", i, "and column", j, "the board contains", ttt[i,j]))
+  }
+}
+
+```
+
+
+## 2. `apply()` Function Family 
+
+### 2.1 `apply()`
+
+`apply()` takes a data frame or matrix as an input and gives output in vector, list or array. Apply function in R is primarily used to avoid explicit uses of loop constructs. The idea is to apply a function repeatedly to a matrix or data frame: apply(X, MARGIN, FUNCTION)
+
+
+```{r}
+
+#Let us create a matrix with random numbers 
+
+mat <- matrix(1:10, nrow = 5, ncol = 6)
+
+head(mat) # It just counts to 10
+
+```
+
+
+Assume you now want to calculate the mean of every column: 
+
+```{r}
+
+apply(mat, 2, mean) # You include the object, the margin: in this case 2, because a matrix is a two dimensional object and lastly the function, meaning what your quantity of interest is.
+
+apply(mat, 2, sum) #Let us get the sum of the columns
+apply(mat, 2, sd) #The standard deviation
+
+
+#The correspoinding Loop would look like this: 
+
+for (i in 1:ncol(mat)) {
+  mean_col <- mean(mat[, i])
+  print(mean_col)
+}
+
+```
+
+The `apply()` function is useful especially if you are working with dimensional bodies and want to calculate anything. However, they can not keep up with the flexibility of loops, you should be aware of that. 
+
+### Notes 
+
+Loops and the apply function are widely used in programming. However, this is no programming course, it is an introduction, so now you have an idea what is happening, if you are seeing those two things in the scripts. But if you are interested in this topic, please read into `while` loops and `repeat` loops. The `apply()` function is part of a family: `sapply()`, `lapply()`, `tapply()` are also in that family. 
+
+
+## 3. Writing your own functions 
+
+We can again safe a lot of time and be more efficient by writing our own function. 
+
++ First, you need to define a name for your function#
++ Afterwards, you write down the command with the `function()` command. In to your brackets you put your variables. Later your input follows those variables. 
++ After the fancy brackets, you define your operation with your predefined variables. 
++ Lastly, you want the function to return your quantity of interest and close the fancy brackets
++ Afterwards you have a function saved and can operate with it 
+
+```{r}
+
+#My function is just a sum
+
+add <- function(x, y) { 
+  
+  result <- x + y
+  return(result)
+}
+
+add(2,7) #Now I can use my function
+
+```
+
+Let us calculate the area of a circle 
+
+```{r}
+
+aoc <- function(radius) {
+  pi <- 3.14159
+  
+  area <- pi * radius^2
+  
+  return(area)
+}
+
+aoc(5)
+
+```
+
+Let us combine what we have learned in this chapter with the Fibonacci sequence. The Fibonnaci sequence starts with 0 and 1, and each subsequent number is the sum of the two numbers before it. The Fibonacci sequence continues indefinitely, producing a sequence like this: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, and so on.
+
+```{r}
+
+
+fibonacci <- function(n) {
+  if (n <= 0) {
+    stop("Invalid input. Please provide a positive integer.") 
+  } else if (n == 1) {
+    sequence <- 0
+  } else if (n == 2) {
+    sequence <- c(0, 1)
+  } else {
+    sequence <- numeric(n)
+    sequence[1] <- 0
+    sequence[2] <- 1
+    for (i in 3:n) {
+      sequence[i] <- sequence[i - 1] + sequence[i - 2]
+    }
+  }
+  return(sequence)
+}
+
+fibonacci(10)
+
+```
+
+## Exercise Section
+
+```{r}
+
+
+
+```
+
+
+## Last Notes 
+
+See this course as a starting point. Do not be frustrated if you did not get everything at the first time. Learning R is a process and you need to be open to it. To further develop your R Skills I have some free books in the Internet available: 
+
++ [R for Data Science, by Hadley Wickham & Garrett Grolemund](https://r4ds.had.co.nz/index.html). This is the most popular book for introductory in R. I made my first steps in R with it. 
+
++ [R für Psychos, Lukas Burk & Tobias Anton](https://r-intro.tadaa-data.de/index.html). This in German, but you can still have a look at their code. The book is good so I wanted to promote it. 
+
++ [Stat545, Jenny Bryan](https://stat545.com/). I complete R course, very detailed is this from Jenny Bryan.
+
++ [Introduction to Econometrics in R](https://www.econometrics-with-r.org/index.html). You will take the QM course, but this book is helpful, when it comes to data analysis in R. Maybe it helps as a cheat sheet for QM. 
+
+What is probably better, but behind paywalls are two sources: 
+
++ [Datacamp](https://www.datacamp.com/) offers great courses with exercises and videos. Sometimes a bit too much, but you can get certificates from datacamp and I myself enjoy it. You can do every first chapter for free, look it up if it is something for you. 
+
++ [Udemy](https://www.udemy.com/) is a wbsite, where you can by extensive courses on R with material. A bit old school, but extremly effective. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
