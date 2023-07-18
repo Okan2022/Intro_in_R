@@ -17,18 +17,17 @@ output:
 
 # Chapter 05: Loops and Functions
 
-For our last chapter I want to introduce to a way to work more efficient. R is a programming language for statistical analysis, but it also includes classical elements of programming. Two main operations are loops and functions. We can automate tasks and the earlier you learn about it the faster you can advance and understand the logic of R. 
+For our last chapter I want to introduce to a way to work more efficient. R is a programming language for statistical analysis, but it also includes classical elements of programming. Two main operations are loops and functions. We can automate tasks and the earlier you learn about it the faster you can advance and understand the logic of R.
 
-
-## 1. Loops 
+## 1. Loops
 
 For example, you can use a loop to iterate through a list of numbers and perform calculations on each number, or to go through the rows of a dataset and apply certain operations to each row. Loops provide a way to streamline your code and avoid writing repetitive instructions manually.
 
-There are different type of Loops, but for this course we focus just on the `for` loops, since you will see them also in the QM Tutorial. 
+There are different type of Loops, but for this course we focus just on the `for` loops, since you will see them also in the QM Tutorial.
 
-### 1.2 `For` loops 
+### 1.2 `For` loops
 
-Do you remeber my grade example from the first chapter? 
+Do you remeber my grade example from the first chapter?
 
 ```{r}
 
@@ -94,9 +93,9 @@ if (grade == 1.0) {
 
 ```
 
-I could now write down all my grades and assign them as I did in the first chapter, but there is a way to automatize this process. For that I will use the `For` loop. 
+I could now write down all my grades and assign them as I did in the first chapter, but there is a way to automatize this process. For that I will use the `For` loop.
 
-First, let us make a vector with grades: 
+First, let us make a vector with grades:
 
 ```{r}
 
@@ -104,14 +103,13 @@ grades <- c(1.7, 3.3, 4.0, 2.3, 1.0)
 
 ```
 
-Now, we can directly dive into the loop. 
+Now, we can directly dive into the loop.
 
-+ Write down `for` and in brackets you define the **loop iterator**, this is the **i** in the loop. Then you define in which object of interest you want to iterate. In our case, the operation should be iterated in the grades vector. I could also write down the number 5, but it is convention to define an object. Why? 
+-   Write down `for` and in brackets you define the **loop iterator**, this is the **i** in the loop. Then you define in which object of interest you want to iterate. In our case, the operation should be iterated in the grades vector. I could also write down the number 5, but it is convention to define an object. Why?
 
-+ After closing the brackets you open fancy brackets and write down your function, as you would normally, but this time you need to define how the iterator is used. Since I use the numbers in grades, my iterator needs to be put in brackets, after the name of the grades. Why? 
+-   After closing the brackets you open fancy brackets and write down your function, as you would normally, but this time you need to define how the iterator is used. Since I use the numbers in grades, my iterator needs to be put in brackets, after the name of the grades. Why?
 
-+ And that's it basically 
-
+-   And that's it basically
 
 ```{r}
 
@@ -130,7 +128,7 @@ for (i in 1:length(grades)) {
 
 ```
 
-Loops can look differently: 
+Loops can look differently:
 
 In this example I have a number vector and my let the console print a sentence, where I vary the number and therefore the sentence changes over every loop
 
@@ -145,12 +143,11 @@ for (i in num) {
 
 ```
 
+### 1.2 Nested Loops
 
-### 1.2 Nested Loops 
+Becuase you will eventually encouter them, I will show you shortly nested loops:
 
-Becuase you will eventually encouter them, I will show you shortly nested loops: 
-
-First, let us play a game of tic tac toe: 
+First, let us play a game of tic tac toe:
 
 ```{r}
 
@@ -161,10 +158,9 @@ ttt <- matrix(c("X", "O", "X",
 
 ```
 
+We define a loop with an iterator **i** for the rows of the matrix, and we define another one for the columns with the iterator **j**.
 
-We define a loop with an iterator **i** for the rows of the matrix, and we define another one for the columns with the iterator **j**. 
-
-Afterwords, we built up the body, in which aim to get information about the matrix and its content. The sentence shows, which rows and columns contain which values. 
+Afterwords, we built up the body, in which aim to get information about the matrix and its content. The sentence shows, which rows and columns contain which values.
 
 ```{r}
 
@@ -176,13 +172,11 @@ for (i in 1:nrow(ttt)) {
 
 ```
 
-
-## 2. `apply()` Function Family 
+## 2. `apply()` Function Family
 
 ### 2.1 `apply()`
 
 `apply()` takes a data frame or matrix as an input and gives output in vector, list or array. Apply function in R is primarily used to avoid explicit uses of loop constructs. The idea is to apply a function repeatedly to a matrix or data frame: apply(X, MARGIN, FUNCTION)
-
 
 ```{r}
 
@@ -194,8 +188,7 @@ head(mat) # It just counts to 10
 
 ```
 
-
-Assume you now want to calculate the mean of every column: 
+Assume you now want to calculate the mean of every column:
 
 ```{r}
 
@@ -214,22 +207,21 @@ for (i in 1:ncol(mat)) {
 
 ```
 
-The `apply()` function is useful especially if you are working with dimensional bodies and want to calculate anything. However, they can not keep up with the flexibility of loops, you should be aware of that. 
+The `apply()` function is useful especially if you are working with dimensional bodies and want to calculate anything. However, they can not keep up with the flexibility of loops, you should be aware of that.
 
-### Notes 
+### Notes
 
-Loops and the apply function are widely used in programming. However, this is no programming course, it is an introduction, so now you have an idea what is happening, if you are seeing those two things in the scripts. But if you are interested in this topic, please read into `while` loops and `repeat` loops. The `apply()` function is part of a family: `sapply()`, `lapply()`, `tapply()` are also in that family. 
+Loops and the apply function are widely used in programming. However, this is no programming course, it is an introduction, so now you have an idea what is happening, if you are seeing those two things in the scripts. But if you are interested in this topic, please read into `while` loops and `repeat` loops. The `apply()` function is part of a family: `sapply()`, `lapply()`, `tapply()` are also in that family.
 
+## 3. Writing your own functions
 
-## 3. Writing your own functions 
+We can again safe a lot of time and be more efficient by writing our own function.
 
-We can again safe a lot of time and be more efficient by writing our own function. 
-
-+ First, you need to define a name for your function#
-+ Afterwards, you write down the command with the `function()` command. In to your brackets you put your variables. Later your input follows those variables. 
-+ After the fancy brackets, you define your operation with your predefined variables. 
-+ Lastly, you want the function to return your quantity of interest and close the fancy brackets
-+ Afterwards you have a function saved and can operate with it 
+-   First, you need to define a name for your function#
+-   Afterwards, you write down the command with the `function()` command. In to your brackets you put your variables. Later your input follows those variables.
+-   After the fancy brackets, you define your operation with your predefined variables.
+-   Lastly, you want the function to return your quantity of interest and close the fancy brackets
+-   Afterwards you have a function saved and can operate with it
 
 ```{r}
 
@@ -245,7 +237,7 @@ add(2,7) #Now I can use my function
 
 ```
 
-Let us calculate the area of a circle 
+Let us calculate the area of a circle
 
 ```{r}
 
@@ -290,55 +282,155 @@ fibonacci(10)
 
 ## Exercise Section
 
+### 1. Write a `for` loop that prints the square of each number from 1 to 10
+
 ```{r}
 
+#Assigning an object for a better workflow
+number <- 10
+
+#The Loop 
+for (i in 1:number) {
+  sq <- i^2
+  print(sq)
+}
+
+
+```
+
+### 2. Do the same, but this time defining a function that squares numbers.
+
+```{r}
+
+#Defining a function for squaring
+
+sq <- function (x) {
+  
+  result <- x^2
+  print(result)
+  
+}
+
+#Defining a vector containing a vector from 1 to 10 
+numbers <- c(1:10) 
+
+#Applying the number 
+sq(numbers)
+
+```
+
+### 3. This is the midnight formula separated in two equations:
+
+$$
+
+x_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+
+$$
+
+Make **one function** for the midnight formula, so the output are both. Test it with a = 2, b = -6, c = -8
+
+**Hint**: You need two split up the formula into two equations with two outputs.
+
+```{r}
+
+mnf <- function (a,b,c) {
+  
+  x_1 <- (-b + sqrt(b^2 - 4*a*c))/(2*a)
+  
+  print(x_1)
+  
+  x_2 <- (-b - sqrt(b^2 - 4*a*c))/(2*a)
+  
+  print(x_2)
+}
+
+
+mnf(2, 6, 8)
+
+```
+
+### 4. Zodiac Fortune Teller 
+
+In the last exercise of this course, we will learn about our future based on our Zodiac Sign. For this we well need a `function`, a `loop` and an `ifelse` condition or function. 
+
+a. First we define a function called `zodiacFortuneTeller()`. This function takes only your sign as input 
+
+b. Afterwards we need to define our fortunes for each zodiac with a vector 
+
+c. Then we need to define a vector with contains the zodiac signs
+
+d. Lastly we need a `for` loop, which returns the respective fortune for each zodiac sign. 
+
+e. This fortune should be returned 
+
+```{r}
+
+fortune <- function(sign) {
+  
+  #Fortunes vector 
+  fortunes <- c("Exciting opportunities are on the horizon for you!",
+              "Your creative talents will shine brightly this month!",
+              "Financial abundance is heading your way!",
+              "You will experience a period of personal growth and
+              self-discovery!",
+              "New friendships will bring joy and fulfillment into you
+              life!",
+              "Your hard work and dedication will pay off in unexpected
+              ways!",
+              "Travel plans will bring you exciting adventures and memorable
+              experiences!",
+              "A long-awaited dream will finally become a reality!",
+              "Your positive attitude and optimism will attract great
+              success!",
+              "Love and romance will blossom in your life!",
+              "Embrace change and seize new opportunities with confidence!",
+              "Your intuitive insights will guide you to make wise
+              decisions!",
+              "A new career opportunity will open doors to success and
+              fulfillment!",
+              "You have the power to overcome any challenges that come your
+              way!",
+              "Your generosity and kindness will be rewarded abundantly!",
+              "Self-care and self-love will lead to inner peace and harmony!"
+              )
+  
+  #Zodiac signs vector 
+  zodiac_signs <- c("Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
+                    "Libra", "Scorpio", "Sagittarius", "Capricorn",
+                    "Aquarius", "Pisces")
+  #For loop 
+  for (i in 1:length(zodiac_signs)) {
+    if (sign == zodiac_signs[i]) {
+      return(fortunes[i])
+    }
+  }
+} 
+
+#Let us see our fortune 
+
+fortune("Aries") #Do not forget to put your sign in quotation marks
 
 
 ```
 
 
-## Last Notes 
-
-See this course as a starting point. Do not be frustrated if you did not get everything at the first time. Learning R is a process and you need to be open to it. To further develop your R Skills I have some free books in the Internet available: 
-
-+ [R for Data Science, by Hadley Wickham & Garrett Grolemund](https://r4ds.had.co.nz/index.html). This is the most popular book for introductory in R. I made my first steps in R with it. 
-
-+ [R für Psychos, Lukas Burk & Tobias Anton](https://r-intro.tadaa-data.de/index.html). This in German, but you can still have a look at their code. The book is good so I wanted to promote it. 
-
-+ [Stat545, Jenny Bryan](https://stat545.com/). I complete R course, very detailed is this from Jenny Bryan.
-
-+ [Introduction to Econometrics in R](https://www.econometrics-with-r.org/index.html). You will take the QM course, but this book is helpful, when it comes to data analysis in R. Maybe it helps as a cheat sheet for QM. 
-
-What is probably better, but behind paywalls are two sources: 
-
-+ [Datacamp](https://www.datacamp.com/) offers great courses with exercises and videos. Sometimes a bit too much, but you can get certificates from datacamp and I myself enjoy it. You can do every first chapter for free, look it up if it is something for you. 
-
-+ [Udemy](https://www.udemy.com/) is a wbsite, where you can by extensive courses on R with material. A bit old school, but extremly effective. 
 
 
 
+## Last Notes
 
+See this course as a starting point. Do not be frustrated if you did not get everything at the first time. Learning R is a process and you need to be open to it. To further develop your R Skills I have some free books in the Internet available:
 
+-   [R for Data Science, by Hadley Wickham & Garrett Grolemund](https://r4ds.had.co.nz/index.html). This is the most popular book for introductory in R. I made my first steps in R with it.
 
+-   [R für Psychos, Lukas Burk & Tobias Anton](https://r-intro.tadaa-data.de/index.html). This in German, but you can still have a look at their code. The book is good so I wanted to promote it.
 
+-   [Stat545, Jenny Bryan](https://stat545.com/). I complete R course, very detailed is this from Jenny Bryan.
 
+-   [Introduction to Econometrics in R](https://www.econometrics-with-r.org/index.html). You will take the QM course, but this book is helpful, when it comes to data analysis in R. Maybe it helps as a cheat sheet for QM.
 
+What is probably better, but behind paywalls are two sources:
 
+-   [Datacamp](https://www.datacamp.com/) offers great courses with exercises and videos. Sometimes a bit too much, but you can get certificates from datacamp and I myself enjoy it. You can do every first chapter for free, look it up if it is something for you.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-   [Udemy](https://www.udemy.com/) is a wbsite, where you can by extensive courses on R with material. A bit old school, but extremely effective.
