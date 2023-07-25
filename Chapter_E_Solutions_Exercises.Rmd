@@ -1,0 +1,356 @@
+---
+title: "Exercise Solution Sheet"
+author: "Okan Sarioglu <br> Leon Siefken"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    css: css/lab.css
+  pdf_document:
+    toc: yes
+  html_notebook:
+    toc: true
+    toc_float: true
+    css: css/lab.css
+---
+
+#Chapter E: Solution Exercises 
+
+## Exercises Chapter 1: 
+
+### Exercise 1: Create a vector called `my_vector` with the values 1,2,3 and check is class.
+
+```{r}
+
+my_vector <- c(1,2,3)
+
+class(my_vector)
+```
+
+### Exercise 2: Create a Matrix called `student`. This should contain information about the `name`, `age` and `major`. Make three vectors and bind them together to a the matrix `student`. Print the matrix. 
+
+```{r}
+
+name <- c("Sören", "Fatma", "Klaus", "Fidelius", "Sven") 
+age  <- c(18, 22, 21, 19, 28) 
+major <- c("Political Science", "Law", "Buisness Administration",
+           "Philosophy", "Law")
+
+student <- cbind(name, 
+                 age,
+                 major)
+
+print(student)
+
+```
+
+### Exercise 3: Write an if-else statement that checks if a given number is positive or negative. If the number is positive, print "Number is positive", otherwise print "Number is negative". Feel free to decide if you want to use the ifelse function or the ifelse condition.
+
+```{r}
+
+#ifelse() function
+
+number <- -4
+
+ifelse(number > 0, "Positive Number", "Negative Number")
+
+#ifelse condition 
+
+if (number > 0) {
+  print("Positive Number")
+} else {
+  print("Negative Number")
+}
+
+
+```
+
+
+### Exercise 4: Write an if-else ladder that categorizes a student's grade based on their score. The grading criteria are as follows:
+
+Score >= 90: "A"
+Score >= 80 and < 90: "B"
+Score >= 70 and < 80: "C"
+Score >= 60 and < 70: "D"
+Score < 60: "F"
+
+```{r}
+
+#ifelse() function 
+
+score <- 78
+
+ifelse(score >= 90, "A", 
+       ifelse (score >= 80 & score < 90, "B", 
+               ifelse(score >= 70 & score < 80, "C",
+                      ifelse(score >= 60 & score < 70, "D",
+                             ifelse(Score < 60, "F")))))
+
+#ifelse condition 
+
+if (score >= 90) {
+  print("A") 
+} else if (score >= 80 & score < 90) {
+  print("B")
+} else if (score >= 70 & score < 80) {
+  print("C")
+} else if (score >= 60 & score < 70) {
+  print("D") 
+} else if (score < 60) {
+  print("F")
+}
+
+
+```
+
+## Exercise Chapter 2: 
+
+### Exercise 1: You are interested in discrimination and the perception of the judicative. More specifically, you want to know if people, who fell discriminated evaluate courts differently. Below you see a table with all variables you want to include in your analysis: 
+
+| **Variable**  | **Description**                                 |
+|---------------|-------------------------------------------------|
+| **cntry**     | Country of respondent                           |
+| **dscrgrp**   | Member of group discriminated against in country|
+| **cttresa**   | The courts treat everyone the same              |
+| **agea**      | Age                                             |
+| **gndr**      | Gender                                          |
+| **eisced**    | Highest level of education                      |
+| **lrscale**   | Left_Right Placement                            |
+|---------------|-------------------------------------------------|
+
+a. Wrangle the data, and assign it to an object called **ess**. 
+b. Select the variables you need
+c. Filter for Austria, Belgium, Denmark, Georgia, Iceland and the Russian Federation 
+d. Have a look at the codebook and code all irrelevant values as missing. If you have binary variables recode them from 1, 2 to 0 to 1  
+e. You want to build an extremism variable: You do so by subtracting 5 from the from the variable and squaring it afterwards. Call it extremism 
+f. Rename the variables to more intuitive names, don't forget to name binary varaibles after the category which is on 1
+g. drop all missing values 
+h. Check out your new dataset 
+
+```{r}
+
+ess <- d1 %>% 
+  select(cntry, dscrgrp, cttresa, agea, gndr, eisced, lrscale) %>% #a
+  filter(cntry %in% c("AT", "BE", "DK", "GE", "IS","RU")) %>% #b
+  mutate(dscrgrp = case_when( #c
+    dscrgrp == 1 ~ 0, 
+    dscrgrp == 2 ~ 1,
+    dscrgrp %in% c(7, 8, 9) ~ NA_real_, 
+    TRUE ~ dscrgrp),
+    cttresa = case_when( 
+    cttresa %in% c(77, 88, 99) ~ NA_real_, 
+    TRUE ~ cttresa),
+    agea = case_when(
+    agea == 999 ~ NA_real_, 
+    TRUE ~ agea),
+    gndr = case_when(
+      gndr == 1 ~ 0, 
+      gndr == 2 ~ 1,
+      gndr == 9 ~ NA_real_
+    ),
+    eisced = case_when( 
+      eisced %in% c(55, 77, 88, 99) ~ NA_real_,
+      TRUE ~ eisced),
+    lrscale = case_when(
+      lrscale %in% c(77, 88, 99) ~ NA_real_,
+      TRUE ~ lrscale), 
+    extremism = (lrscale - 5)^2 #d, you could do this step also in a separate mutate function if you think that is more intuitive 
+  ) %>% 
+  rename(discriminated = dscrgrp,  
+         court = cttresa,
+         age = agea, 
+         female = gndr, 
+         education = eisced, 
+         lrscale = lrscale, 
+         extremism = extremism
+         ) %>% 
+  drop_na()
+
+#Checking the dataset 
+
+head(ess)
+
+  
+```
+
+
+### Exercise 2: Merging Datasets 
+
+The `gapminder` package in R loads automatically the gapminder dataset. gapminder is an independent educational non-profit fighting global misconceptions, check out their website: https://www.gapminder.org/
+The gapminder dataset is already loaded. 
+
+a. Get an overview of the gapminder dataset. There are different ways to do so, you can choose by yourself
+
+```{r}
+
+head(gapminder)#my favourite
+
+glimpse(gapminder) #dplyr function
+
+skimr::skim_without_charts(gapminder) #some descriptives 
+
+```
+
+b. We already loaded World Bank Data in the object **wb**. Merge the two datasets! Use `left_join()` and merge the gapminder dataset into the World Bank data. Define a new object called mer_df
+
+```{r}
+
+head(wb)
+
+#With pipeline 
+
+mer_df <- wb %>% 
+  left_join(gapminder, by = c( 
+            "country" = "country",
+            "year" = "year"))
+
+#without pipeline 
+
+# mer_df <- left_join(wb, gapminder, by = c("country" = "country", "year" = "year") 
+
+
+```
+
+## Exercises Chapter 5: 
+
+## Exercise Section
+
+### Exercise 1: Write a `for` loop that prints the square of each number from 1 to 10
+
+```{r}
+
+#Assigning an object for a better workflow
+number <- 10
+
+#The Loop 
+for (i in 1:number) {
+  sq <- i^2
+  print(sq)
+}
+
+
+```
+
+### Exercise 2: Do the same, but this time defining a function that squares numbers.
+
+```{r}
+
+#Defining a function for squaring
+
+sq <- function (x) {
+  
+  result <- x^2
+  print(result)
+  
+}
+
+#Defining a vector containing a vector from 1 to 10 
+numbers <- c(1:10) 
+
+#Applying the number 
+sq(numbers)
+
+```
+
+### Exercise 3: This is the midnight formula separated in two equations:
+
+$$
+
+x_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+
+$$
+
+Make **one function** for the midnight formula, so the output are both. Test it with a = 2, b = -6, c = -8
+
+**Hint**: You need two split up the formula into two equations with two outputs.
+
+```{r}
+
+mnf <- function (a,b,c) {
+  
+  x_1 <- (-b + sqrt(b^2 - 4*a*c))/(2*a)
+  
+  print(x_1)
+  
+  x_2 <- (-b - sqrt(b^2 - 4*a*c))/(2*a)
+  
+  print(x_2)
+}
+
+
+mnf(2, 6, 8)
+
+```
+
+### Exercise 4: Zodiac Fortune Teller 
+
+In the last exercise of this course, we will learn about our future based on our Zodiac Sign. For this we well need a `function`, a `loop` and an `ifelse` condition or function. 
+
+a. First we define a function called `zodiacFortuneTeller()`. This function takes only your sign as input 
+
+b. Afterwards we need to define our fortunes for each zodiac with a vector 
+
+c. Then we need to define a vector with contains the zodiac signs
+
+d. Lastly we need a `for` loop, which returns the respective fortune for each zodiac sign. 
+
+e. This fortune should be returned 
+
+```{r}
+
+fortune <- function(sign) {
+  
+  #Fortunes vector 
+  fortunes <- c("Exciting opportunities are on the horizon for you!",
+              "Your creative talents will shine brightly this month!",
+              "Financial abundance is heading your way!",
+              "You will experience a period of personal growth and
+              self-discovery!",
+              "New friendships will bring joy and fulfillment into you
+              life!",
+              "Your hard work and dedication will pay off in unexpected
+              ways!",
+              "Travel plans will bring you exciting adventures and memorable
+              experiences!",
+              "A long-awaited dream will finally become a reality!",
+              "Your positive attitude and optimism will attract great
+              success!",
+              "Love and romance will blossom in your life!",
+              "Embrace change and seize new opportunities with confidence!",
+              "Your intuitive insights will guide you to make wise
+              decisions!",
+              "A new career opportunity will open doors to success and
+              fulfillment!",
+              "You have the power to overcome any challenges that come your
+              way!",
+              "Your generosity and kindness will be rewarded abundantly!",
+              "Self-care and self-love will lead to inner peace and harmony!"
+              )
+  
+  #Zodiac signs vector 
+  zodiac_signs <- c("Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
+                    "Libra", "Scorpio", "Sagittarius", "Capricorn",
+                    "Aquarius", "Pisces")
+  #For loop 
+  for (i in 1:length(zodiac_signs)) {
+    if (sign == zodiac_signs[i]) {
+      return(fortunes[i])
+    }
+  }
+} 
+
+#Let us see our fortune 
+
+fortune("Aries") #Do not forget to put your sign in quotation marks
+
+
+```
+
+
+
+
+
+
+
+

@@ -282,7 +282,7 @@ fibonacci(10)
 
 ## Exercise Section
 
-### 1. Write a `for` loop that prints the square of each number from 1 to 10
+### Exercise 1: Write a `for` loop that prints the square of each number from 1 to 10
 
 ```{r}
 
@@ -298,7 +298,7 @@ for (i in 1:number) {
 
 ```
 
-### 2. Do the same, but this time defining a function that squares numbers.
+### Exercise 2: Do the same, but this time defining a function that squares numbers.
 
 ```{r}
 
@@ -319,7 +319,7 @@ sq(numbers)
 
 ```
 
-### 3. This is the midnight formula separated in two equations:
+### Exercise 3: This is the midnight formula separated in two equations:
 
 $$
 
@@ -349,7 +349,7 @@ mnf(2, 6, 8)
 
 ```
 
-### 4. Zodiac Fortune Teller 
+### Exercise 4: Zodiac Fortune Teller 
 
 In the last exercise of this course, we will learn about our future based on our Zodiac Sign. For this we well need a `function`, a `loop` and an `ifelse` condition or function. 
 
@@ -363,7 +363,7 @@ d. Lastly we need a `for` loop, which returns the respective fortune for each zo
 
 e. This fortune should be returned 
 
-```{r}
+```{r, eval = FALSE}
 
 fortune <- function(sign) {
   
@@ -394,26 +394,17 @@ fortune <- function(sign) {
               "Self-care and self-love will lead to inner peace and harmony!"
               )
   
-  #Zodiac signs vector 
-  zodiac_signs <- c("Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
-                    "Libra", "Scorpio", "Sagittarius", "Capricorn",
-                    "Aquarius", "Pisces")
+  #Zodiac_sings vector 
+  
+  zodiac_signs <- 
+  
   #For loop 
-  for (i in 1:length(zodiac_signs)) {
-    if (sign == zodiac_signs[i]) {
-      return(fortunes[i])
-    }
-  }
-} 
 
-#Let us see our fortune 
-
-fortune("Aries") #Do not forget to put your sign in quotation marks
-
+  
+  
+}
 
 ```
-
-
 
 
 

@@ -65,7 +65,7 @@ One way is the `pacman` package:
 
 ```{r}
 
-pacman::p_load("tidyverse", "haven", "psych", "skim", "WDI", "OECD") 
+pacman::p_load("tidyverse", "haven", "psych", "WDI", "OECD", "gapminder") 
 
 # First, if you use the name of package and put a "::" behind it you tell R to go into the package and to specifically get one command of the package, in our case the `p_load` command. 
 
@@ -87,7 +87,7 @@ knitr::opts_chunk$set(
 # First you define which packages you need for your analysis and assign it to
 # the p_needed object.
 p_needed <-
-  c("tidyverse","haven", "psych","skim", "WDI", "OECD")
+  c("tidyverse","haven", "psych", "WDI", "OECD","gapminder")
 
 # Now you check which packages are already installed on your computer.
 # The function installed.packages() returns a vector with all the installed
@@ -638,9 +638,9 @@ head(merged_data2)
 ```
 
 
-##Exercise Section: 
+## Exercise Section: 
 
-### 1.) You are interested in discrimination and the perception of the judicative. More specifically, you want to know if people, who fell discriminated evaluate courts differently. Below you see a table with all variables you want to include in your analysis: 
+### Exercise 1: You are interested in discrimination and the perception of the judicative. More specifically, you want to know if people, who fell discriminated evaluate courts differently. Below you see a table with all variables you want to include in your analysis: 
 
 | **Variable**  | **Description**                                 |
 |---------------|-------------------------------------------------|
@@ -664,80 +664,30 @@ h. Check out your new dataset
 
 ```{r}
 
-ess <- d1 %>% 
-  select(cntry, dscrgrp, cttresa, agea, gndr, eisced, lrscale) %>% #a
-  filter(cntry %in% c("AT", "BE", "DK", "GE", "IS","RU")) %>% #b
-  mutate(dscrgrp = case_when( #c
-    dscrgrp == 1 ~ 0, 
-    dscrgrp == 2 ~ 1,
-    dscrgrp %in% c(7, 8, 9) ~ NA_real_, 
-    TRUE ~ dscrgrp),
-    cttresa = case_when( 
-    cttresa %in% c(77, 88, 99) ~ NA_real_, 
-    TRUE ~ cttresa),
-    agea = case_when(
-    agea == 999 ~ NA_real_, 
-    TRUE ~ agea),
-    gndr = case_when(
-      gndr == 1 ~ 0, 
-      gndr == 2 ~ 1,
-      gndr == 9 ~ NA_real_
-    ),
-    eisced = case_when( 
-      eisced %in% c(55, 77, 88, 99) ~ NA_real_,
-      TRUE ~ eisced),
-    lrscale = case_when(
-      lrscale %in% c(77, 88, 99) ~ NA_real_,
-      TRUE ~ lrscale), 
-    extremism = (lrscale - 5)^2 #d, you could do this step also in a separate mutate function if you think that is more intuitive 
-  ) %>% 
-  rename(discriminated = dscrgrp,  
-         court = cttresa,
-         age = agea, 
-         female = gndr, 
-         education = eisced, 
-         lrscale = lrscale, 
-         extremism = extremism
-         ) %>% 
-  drop_na()
 
-#Checking the dataset 
-
-head(ess)
-
-  
 ```
 
 
+### Exercise 2: Merging Datasets 
+
+The `gapminder` package in R loads automatically the gapminder dataset. gapminder is an independent educational non-profit fighting global misconceptions, check out their website: https://www.gapminder.org/
+The gapminder dataset is already loaded. 
+
+a. Get an overview of the gapminder dataset. There are different ways to do so, you can choose by yourself
+
+```{r}
 
 
+```
 
+b. We already loaded World Bank Data in the object **wb**. Merge the two datasets! Use `left_join()` and merge the gapminder dataset into the World Bank data. Define a new object called mer_df
 
+```{r}
 
+#Check the structure of the dataset
+head(wb)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```
 
 
 

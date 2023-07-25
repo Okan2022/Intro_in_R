@@ -61,7 +61,7 @@ You will **not** learn:
 
 ### 1.5 Overview of the course structure: 
 
-**1. The R enviornment** 
+**1. The R environment** 
 
  + Basic Functionality (Calculations, Vectors, Matrices, Lists)
  + Object classes 
@@ -91,8 +91,8 @@ You will **not** learn:
 
 **5. R Programming** 
 
- + Apply Function
- + For Loops 
+ + For loops
+ + Apply function 
  + Functions
 
 
@@ -541,25 +541,13 @@ ifelse(grade == 1.0, "Amazing",
 
 ```{r}
 
-my_vector <- c(1,2,3)
 
-class(my_vector)
 ```
 
 ### Exercise 2: Create a Matrix called `student`. This should contain information about the `name`, `age` and `major`. Make three vectors and bind them together to a the matrix `student`. Print the matrix. 
 
 ```{r}
 
-name <- c("Sören", "Fatma", "Klaus", "Fidelius", "Sven") 
-age  <- c(18, 22, 21, 19, 28) 
-major <- c("Political Science", "Law", "Buisness Administration",
-           "Philosophy", "Law")
-
-student <- cbind(name, 
-                 age,
-                 major)
-
-print(student)
 
 ```
 
@@ -567,25 +555,15 @@ print(student)
 
 ```{r}
 
-#ifelse() function
-
+#Assigning the number to the object "number"
 number <- -4
 
-ifelse(number > 0, "Positive Number", "Negative Number")
-
-#ifelse condition 
-
-if (number > 0) {
-  print("Positive Number")
-} else {
-  print("Negative Number")
-}
 
 
 ```
 
 
-### Exercise 6: Write an if-else ladder that categorizes a student's grade based on their score. The grading criteria are as follows:
+### Exercise 4: Write an if-else ladder that categorizes a student's grade based on their score. The grading criteria are as follows:
 
 Score >= 90: "A"
 Score >= 80 and < 90: "B"
@@ -595,33 +573,7 @@ Score < 60: "F"
 
 ```{r}
 
-#ifelse() function 
-
-score <- 78
-
-ifelse(score >= 90, "A", 
-       ifelse (score >= 80 & score < 90, "B", 
-               ifelse(score >= 70 & score < 80, "C",
-                      ifelse(score >= 60 & score < 70, "D",
-                             ifelse(Score < 60, "F")))))
-
-#ifelse condition 
-
-if (score >= 90) {
-  print("A") 
-} else if (score >= 80 & score < 90) {
-  print("B")
-} else if (score >= 70 & score < 80) {
-  print("C")
-} else if (score >= 60 & score < 70) {
-  print("D") 
-} else if (score < 60) {
-  print("F")
-}
-
-
 ```
-
 
 
 
