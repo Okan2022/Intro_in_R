@@ -30,7 +30,7 @@ output:
 - `R` and RStudio 
 - Access to Ilias 
 
-### What is `R` and `RStudio`
+### What is `R` and `RStudio` ?
 
 `R` is a programming language specifically developed for statistical analysis. `RStudio` is a nice graphical interface to work with R. 
 
@@ -210,13 +210,13 @@ e.g.
 + `median()` for the median 
 
 
-```{r}
+```{r, eval=FALSE}
 
 sqrt(36)
 
 exp(0)
 
-print("I am the best") #with this command you can print what you want 
+print("U can stay under my umbrella") #with this command you can print what you want 
 
 #If you need help with a command you can use a question mark in front of the command or the help command
 
@@ -423,7 +423,7 @@ if(grade < 2) {
 
 grade <- 2.5 
 
-if(grade2 < 2) {
+if(grade < 2) {
   print("Good Job")
 } #Since the condition is not met, nothing happens
 
@@ -441,7 +441,7 @@ Now we just add a **body of else** into the equation, in R that means we need to
 
 grade <- 3.3
 
-if (grade3 <= 2) {
+if (grade <= 2) {
   print("Good Job")
 } else {
   print("Life goes on")
@@ -537,21 +537,39 @@ ifelse(grade == 1.0, "Amazing",
 
 ## Exercise Section: 
 
-### Exercise 1: Create a vector called `my_vector` with the values 1,2,3 and check is classe.
+### Exercise 1: 
 
-```{r}
+Create a vector called `my_vector` with the values 1,2,3 and check is class.
 
+```{r, eval=FALSE}
+#create the vector 
+my_vector <- 
 
-```
-
-### Exercise 2: Create a Matrix called `student`. This should contain information about the `name`, `age` and `major`. Make three vectors and bind them together to a the matrix `student`. Print the matrix. 
-
-```{r}
-
+#check the class
 
 ```
 
-### Exercise 3: Write an if-else statement that checks if a given number is positive or negative. If the number is positive, print "Number is positive", otherwise print "Number is negative". Feel free to decide if you want to use the ifelse function or the ifelse condition.
+### Exercise 2: 
+
+Create a Matrix called `student`. This should contain information about the `name`, `age` and `major`. Make three vectors wiht three entries and bind them together to a the matrix `student`. Print the matrix. 
+
+```{r, eval = FALSE}
+#Create the vectors 
+
+name <- 
+age <- 
+major <- 
+
+#Create the matrix
+student <- 
+  
+#Print the matrix
+
+```
+
+### Exercise 3: 
+
+Write an if-else statement that checks if a given number is positive or negative. If the number is positive, print "Number is positive", otherwise print "Number is negative". Feel free to decide if you want to use the ifelse function or the ifelse condition.
 
 ```{r}
 
@@ -563,7 +581,9 @@ number <- -4
 ```
 
 
-### Exercise 4: Write an if-else ladder that categorizes a student's grade based on their score. The grading criteria are as follows:
+### Exercise 4: 
+
+Write an if-else ladder that categorizes a student's grade based on their score. The grading criteria are as follows:
 
 Score >= 90: "A"
 Score >= 80 and < 90: "B"
