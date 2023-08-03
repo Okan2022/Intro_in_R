@@ -282,7 +282,9 @@ fibonacci(10)
 
 ## Exercise Section
 
-### Exercise 1: Write a `for` loop that prints the square of each number from 1 to 10
+### Exercise 1: 
+
+Write a `for` loop that prints the square of each number from 1 to 10
 
 ```{r}
 
@@ -290,24 +292,23 @@ fibonacci(10)
 number <- 10
 
 #The Loop 
-for (i in 1:number) {
-  sq <- i^2
-  print(sq)
-}
+
+
 
 
 ```
 
-### Exercise 2: Do the same, but this time defining a function that squares numbers.
+### Exercise 2: 
 
-```{r}
+Do the same, but this time defining a function that squares numbers.
+
+```{r, eval=FALSE}
 
 #Defining a function for squaring
 
 sq <- function (x) {
   
-  result <- x^2
-  print(result)
+  
   
 }
 
@@ -319,7 +320,9 @@ sq(numbers)
 
 ```
 
-### Exercise 3: This is the midnight formula separated in two equations:
+### Exercise 3: 
+
+This is the midnight formula separated in two equations:
 
 $$
 
@@ -331,18 +334,9 @@ Make **one function** for the midnight formula, so the output are both. Test it 
 
 **Hint**: You need two split up the formula into two equations with two outputs.
 
-```{r}
+```{r, eval=FALSE}
 
-mnf <- function (a,b,c) {
-  
-  x_1 <- (-b + sqrt(b^2 - 4*a*c))/(2*a)
-  
-  print(x_1)
-  
-  x_2 <- (-b - sqrt(b^2 - 4*a*c))/(2*a)
-  
-  print(x_2)
-}
+mnf <- 
 
 
 mnf(2, 6, 8)
@@ -412,6 +406,8 @@ fortune <- function(sign) {
 
 See this course as a starting point. Do not be frustrated if you did not get everything at the first time. Learning R is a process and you need to be open to it. To further develop your R Skills I have some free books in the Internet available:
 
+-   [R Cheatsheets](https://posit.co/resources/cheatsheets/): Especially in the beginning, it is hard to know important codes by heart. For this case the R cheat sheets for some important packages are helpful. I recommend to print or save digitally the cheat sheets for base R, dplyr, and ggplot2.
+
 -   [R for Data Science, by Hadley Wickham & Garrett Grolemund](https://r4ds.had.co.nz/index.html). This is the most popular book for introductory in R. I made my first steps in R with it.
 
 -   [R für Psychos, Lukas Burk & Tobias Anton](https://r-intro.tadaa-data.de/index.html). This in German, but you can still have a look at their code. The book is good so I wanted to promote it.
@@ -420,8 +416,8 @@ See this course as a starting point. Do not be frustrated if you did not get eve
 
 -   [Introduction to Econometrics in R](https://www.econometrics-with-r.org/index.html). You will take the QM course, but this book is helpful, when it comes to data analysis in R. Maybe it helps as a cheat sheet for QM.
 
-What is probably better, but behind paywalls are two sources:
+The two best methods to learn R systematically are those two sources, **but** they are chargeable: 
 
 -   [Datacamp](https://www.datacamp.com/) offers great courses with exercises and videos. Sometimes a bit too much, but you can get certificates from datacamp and I myself enjoy it. You can do every first chapter for free, look it up if it is something for you.
 
--   [Udemy](https://www.udemy.com/) is a wbsite, where you can by extensive courses on R with material. A bit old school, but extremely effective.
+-   [Udemy](https://www.udemy.com/) is a website, where you can by extensive courses on R with material. A bit old school, but extremely effective.
