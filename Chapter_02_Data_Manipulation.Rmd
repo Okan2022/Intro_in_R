@@ -15,7 +15,7 @@ output:
     css: css/lab.css
 ---
 
-# Chapter 2: Data Manipulation/Wrangling/Bridging/Munging
+# Chapter 2: Data Manipulation
 
 ## 1. Packages 
 
@@ -39,7 +39,7 @@ To install packages you use the very creative `install.packages()` command in R.
 Note that it is necessary to directly install a package in R. This step is only 
 required once. 
 
-```{r}
+```{r, eval=FALSE}
 
 install.packages("tidyverse") #You need to put the name of the package into quotation marks 
 install.packages("haven") #This is a package which helps to read different types of data into R 
@@ -87,7 +87,7 @@ knitr::opts_chunk$set(
 # First you define which packages you need for your analysis and assign it to
 # the p_needed object.
 p_needed <-
-  c("tidyverse","haven", "psych", "WDI", "OECD","gapminder")
+  c("tidyverse","haven", "psych", "WDI","gapminder")
 
 # Now you check which packages are already installed on your computer.
 # The function installed.packages() returns a vector with all the installed
@@ -117,7 +117,7 @@ This code is used in your QM class, don't worry about it, it does the same as th
 
 The last step, before starting data manipulation is to read data into R. There are different types of data structures, I will present you the most frequent ones and the codes to read them in: 
 
-|File           |File Extension | Command (Package)                            |
+|File           |File Extension |Command                                     |
 |---------------|---------------|----------------------------------------------|
 | **Stata**     | .dta          | `read.dta13()`, `read_dta()`                 |
 | **CSV-Files** | .csv          | `read_csv()`                                 |
@@ -131,9 +131,10 @@ For the following Data Manipulation Part, we will use the European Social Survey
 You can freely download it via the [website](https://www.europeansocialsurvey.org/) of the ESS. From there you need to go to the Data Portal and than you can download the Round you want, in the format you want. As already mentioned, use the `.dta` or `.csv` format. 
 
 
-## 4. Let'S wrangle the data 
+## 4. Let's wrangle the data 
 
 ![](images/meme1.jpg)
+
 ### 4.1 Load the data
 
 ```{r}
@@ -193,7 +194,7 @@ Dplyr is the standard package, when it comes to data manipulation. It has 5 esse
 
 If we want to filter our dataset for certain conditions, the `filter()` command is what we need: 
 
-```{r}
+```{r, eval = FALSE}
 
 #================================#
 #Filtering for only one condition 
@@ -204,34 +205,34 @@ d2 <- d1 %>% #Our dataset
 
 head(d2) #Lets have a look if everything worked out 
 
-d3 <- d1 %>%  
+d2 <- d1 %>%  
   filter(agea <= 40) #We only want participants younger than 40
 
-head(d3) #Lets have a look if everything worked out
+head(d2) #Lets have a look if everything worked out
 
 
 #================================#
 #Filtering for multiple condition 
 #================================#
 
-d4 <- d1 %>% #Our dataset 
+d2 <- d1 %>% #Our dataset 
   filter(cntry %in% c("HU", "FR")) #filtering for cases in Hungary and France.
 
-head(d4) #Lets have a look if everything worked out 
+head(d2) #Lets have a look if everything worked out 
 
-d5 <- d1 %>% #Our dataset 
+d2 <- d1 %>% #Our dataset 
   filter(cntry %in% c("HU", "FR") &
            agea <= 40) #filtering for cases under 40 in Hungary and France.
 
  #Lets have a look if everything worked out 
 
-head(d5)
+head(d2)
 
-d5.1 <- d1 %>% #Our dataset
+d2 <- d1 %>% #Our dataset
   filter(cntry %in% c("HU", "FR"), 
            agea <= 40) #filtering for cases under 40 in Hungary and France with a comma
 
-
+head(d2)
 
 ```
 
@@ -242,28 +243,28 @@ We obviously do not care about all variables a dataset can offer (mostly). To se
  
 ```{r}
 
-d6 <- d1 %>%
+d3 <- d1 %>%
    select(trstsci, getnvc19, agea, eisced, gndr, lrscale) #Let's get the for us relevant variables
 
-head(d6) #always check
+head(d3) #always check
 
 #Of course we can combine the commands 
 
-d7 <- d1 %>%
+d2 <- d1 %>%
   filter(agea < 40) %>%
   select(trstsci, getnvc19, agea, eisced, gndr, lrscale)
 
-head(d7)
+head(d2)
 
 #We can also delete columns from dataset, lets take the d6 and delete `lrscale`
 
-head(d6)
+head(d2)
 
-d8 <- d6 %>% 
+d2 <- d3 %>% 
   select(-lrscale) #We delete columns by simply putting a comma before it
 
 
-head(d8)
+head(d2)
 
 
 ```
@@ -278,23 +279,23 @@ If we want our data to be in a certain order, we arrange it with this function.
 
 #Let us take the code for d7 as example again 
 
-d7.1 <- d1 %>%
+d2 <- d1 %>%
   filter(agea < 40) %>%
   select(trstsci, getnvc19, agea, eisced, gndr, lrscale) %>% 
   arrange(agea) #We just use the agea function and then R sorts the variable from the lowest to the highest 
 
-head(d7.1)
+head(d2)
 
 #What if we want to have it from the highest to the lowest? 
 
 #Let us take the code for d7 as example again 
 
-d7.2 <- d1 %>%
+d2 <- d1 %>%
   filter(agea < 40) %>%
   select(trstsci, getnvc19, agea, eisced, gndr, lrscale) %>% 
   arrange(desc(agea))#We just use the desc() function in the arrange finction and R sorts the variable from the lowest to the highest 
 
-head(d7.2)
+head(d2)
 
 ```
 
@@ -305,7 +306,7 @@ Two functions to make our dataset structured more useful are `rename()` `relocat
 ```{r}
 #we again take d7s code 
 
-d7.3 <- d1 %>%
+d2 <- d1 %>%
   filter(agea < 40) %>%
   select(trstsci, getnvc19, agea, eisced, gndr, lrscale) %>% 
   arrange(desc(agea)) %>%
@@ -314,11 +315,11 @@ d7.3 <- d1 %>%
          education = eisced, 
          female = gndr) #First you put the new name, equal sign and then you put the old name of the variable 
 
-head(d7.3)
+head(d2)
 
 #===============================#
 
-d7.4 <- d1 %>%
+d2 <- d1 %>%
   filter(agea < 40) %>%
   select(trstsci, getnvc19, agea, eisced, gndr, lrscale) %>% 
   arrange(desc(agea)) %>%
@@ -328,12 +329,12 @@ d7.4 <- d1 %>%
          female = gndr) %>% 
   relocate(lrscale, age, education, female, get_vac, trstsci) #determine the order
 
-head(d7.4)
+head(d2)
 
 
 # We can also specifically determine where we want to have the variable 
 
-d7.5 <- d1 %>%
+d2 <- d1 %>%
   filter(agea < 40) %>%
   select(trstsci, getnvc19, agea, eisced, gndr, lrscale) %>% 
   arrange(desc(agea)) %>%
@@ -343,11 +344,11 @@ d7.5 <- d1 %>%
          female = gndr) %>% 
   relocate(lrscale, .after = age) #after with a point in front of it puts the variable after age
 
-head(d7.5)
+head(d2)
 
 
 
-d7.6 <- d1 %>%
+d2 <- d1 %>%
   filter(agea < 40) %>%
   select(trstsci, getnvc19, agea, eisced, gndr, lrscale) %>% 
   arrange(desc(agea)) %>%
@@ -357,7 +358,7 @@ d7.6 <- d1 %>%
          female = gndr) %>% 
   relocate(lrscale, .before = age) #before with a point in front of it puts the variable before age
 
-head(d7.6)
+head(d2)
 
 
 ```
@@ -369,18 +370,18 @@ Our next function helps us to calculate new variables and transoform variables i
 
 ```{r}
 
-d9 <- d6 %>%
+d2 <- d3 %>%
   mutate(trstsci_10 = trstsci*10) #You use the mutate function by first declaring a new variable name, in our case trstsci_10 and then you write down your operation. 
 
-head(d9)
+head(d2)
 
 #We can also combine two or more variables to create another variable and we can change the class of a variable
 
-d10 <- d6 %>% 
+d2 <- d3 %>% 
   mutate(new_variable = trstsci*10/lrscale+67, 
          gndr_char = as.character(gndr))
 
-head(d10)
+head(d2)
 
 ```
 
@@ -391,7 +392,7 @@ head(d10)
 
 #The recode() function can be used to convert a variable, this is particulary useful, if we have an empirical strategy, which requires that or if we want to make new variables with new classes out of it: 
 
-d12 <- d6 %>% 
+d2 <- d3 %>% 
   mutate(
     gndr_fac = as.factor(gndr),
     lr_cat = recode(lrscale,
@@ -417,8 +418,8 @@ d12 <- d6 %>%
 
 #Let us check how it worked out 
 
-table(d12$lr_cat)
-table(d12$gender)
+table(d2$lr_cat)
+table(d2$gender)
 
 ```
 
@@ -428,7 +429,7 @@ As you see, the `recode()` command is quite extensive. The **tidyverse** offers 
 
 ```{r}
 
-d13 <- d6 %>% 
+d2 <- d3 %>% 
   mutate(gndr = as.factor(gndr),
     lr_cat = case_when(
     lrscale < 5 ~ 0,
@@ -443,8 +444,8 @@ d13 <- d6 %>%
 
 #Do not get confused with the brackets, I always do...
 
-table(d13$gender)
-table(d13$lr_cat)
+table(d2$gender)
+table(d2$lr_cat)
 
 ```
 
@@ -454,7 +455,7 @@ Do you remember the `ifelse()` function? As already mentioned, the `case_when()`
 
 ```{r}
 
-d13 <- d6 %>% 
+d2 <- d3 %>% 
   mutate(gndr = as.factor(gndr),
          lr_cat = ifelse(lrscale < 5, 0, 
                             ifelse(lrscale == 5, 1, 
@@ -466,8 +467,8 @@ d13 <- d6 %>%
 
 #Check 
 
-table(d13$lr_cat)
-table(d13$gender)
+table(d2$lr_cat)
+table(d2$gender)
 
 
 ```
@@ -492,8 +493,10 @@ We will do the second one, and I already showed how to recode useless values to 
 
 #For that we take our dataset d6 
 
-d6 <- d6 %>% 
+d3 <- d3 %>% 
   drop_na() #The command drop_na() drops all missing rows with missing values. The base R command is na.omit() and does the same.
+
+d3.1 <- na.omit(d3) 
 
 ```
 
@@ -502,7 +505,7 @@ Now we have all ingredients to make our dataset. Do you remember our research qu
 
 ```{r}
 
-d16 <- d1 %>%
+d2 <- d1 %>%
   filter(agea >=40) %>% #filtering for bigger equal 40 years old
   select(trstsci, getnvc19, agea, eisced, gndr, lrscale) %>% #selecting only relevant variables 
   arrange(desc(agea)) %>% #arranging them by age in a descending order 
@@ -535,7 +538,7 @@ d16 <- d1 %>%
     ) %>% 
   drop_na() #dropping all rows with NAs
 
-head(d16)
+head(d2)
 
 ```
 
@@ -640,7 +643,9 @@ head(merged_data2)
 
 ## Exercise Section: 
 
-### Exercise 1: You are interested in discrimination and the perception of the judicative. More specifically, you want to know if people, who fell discriminated evaluate courts differently. Below you see a table with all variables you want to include in your analysis: 
+### Exercise 1: Let's wrangle kid 
+
+You are interested in discrimination and the perception of the judicial. More specifically, you want to know if people, who fell discriminated evaluate courts differently. Below you see a table with all variables you want to include in your analysis: 
 
 | **Variable**  | **Description**                                 |
 |---------------|-------------------------------------------------|
@@ -662,8 +667,9 @@ f. Rename the variables to more intuitive names, don't forget to name binary var
 g. drop all missing values 
 h. Check out your new dataset 
 
-```{r}
+```{r, eval=FALSE}
 
+ess <- 
 
 ```
 
@@ -675,7 +681,7 @@ The gapminder dataset is already loaded.
 
 a. Get an overview of the gapminder dataset. There are different ways to do so, you can choose by yourself
 
-```{r}
+```{r, eval=FALSE}
 
 
 ```
