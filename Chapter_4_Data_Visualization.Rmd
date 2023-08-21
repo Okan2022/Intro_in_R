@@ -32,7 +32,7 @@ Our goal with this data today, is to visualize the development of democracy over
 
 ```{r vdem}
 setwd("C:/Users/leons/Desktop/R Intro/Data")
-vdem <- readRDS("V-Dem-CY-Full+Others-v13.rds")
+vdem <- read.csv("vdem_subset.csv")
 ```
 ## 3. Making a Plot
 
