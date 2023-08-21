@@ -244,7 +244,8 @@ ggplot(data=vdem, aes(x = as.factor(year), y = v2clgencl)) +
   labs(title = "Boxplots of Gender Equality",
        subtitle = "Around the World, 1980-2010",
        x = "Year",
-       y = "Gender Equality")
+       y = "Gender Equality") +
+  theme_classic()
 ```
 
 
