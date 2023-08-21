@@ -212,6 +212,42 @@ mer_df <- wb %>%
 
 ```
 
+
+## Exercises Chapter 3:
+
+### Exercise 1: Power to the People
+
+```{r}
+summary(comp$populism)
+mean(comp$populism)
+median(comp$populism)
+quantile(comp$populism, na.rm = T)
+quantile(comp$populism, 0.75, na.rm = T) - quantile(comp$populism, 0.25, na.rm = T)
+hist(comp$populism, breaks = 40)
+```
+
+### Exercise 2: Anti-Immigration Sentiment, That's what `the People` want...?
+
+```{r}
+cor(comp$generalwill, comp$immigration, use = "complete.obs") 
+cor(comp$generalwill, comp$immigration, method = "spearman", use = "complete.obs")
+cor(comp$generalwill, comp$immigration, method = "kendall", use = "complete.obs")
+```
+All three correlation coefficients indicate a medium sized negative correlation. Juding from the codebook, this indicates that the more a party is in favor of immigration, the less it claims to represent a `general will` within the society, a populist concept and one of populisms main dimensions. 
+
+## Exercise Chapter 4:
+
+```{r}
+ggplot(data=vdem, aes(x = as.factor(year), y = v2clgencl)) + 
+  geom_boxplot() +
+  xlim(as.factor(seq(1985,2005))) +
+  labs(title = "Boxplots of Gender Equality",
+       subtitle = "Around the World, 1980-2010",
+       x = "Year",
+       y = "Gender Equality")
+```
+
+
 ## Exercises Chapter 5: 
 
 ## Exercise Section
