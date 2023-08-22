@@ -139,7 +139,7 @@ You can freely download it via the [website](https://www.europeansocialsurvey.or
 
 ```{r}
 
-d1 <- read.csv("data/ESS10.csv") #If it is not in the same direction than the R-Project, you should specify the the so-called path. Put the path in quotation marks and assign it to an object to work with it easier.
+d1 <- read.csv("data/ESS10_sub.csv") #If it is not in the same direction than the R-Project, you should specify the the so-called path. Put the path in quotation marks and assign it to an object to work with it easier.
 
 #This could take some time, since the dataset is huge 
 
@@ -246,7 +246,7 @@ We obviously do not care about all variables a dataset can offer (mostly). To se
 d2 <- d1 %>%
    select(trstsci, getnvc19, agea, eisced, gndr, lrscale) #Let's get the for us relevant variables
 
-head(d3) #always check
+head(d2) #always check
 
 #Of course we can combine the commands 
 
@@ -260,7 +260,7 @@ head(d2)
 
 head(d2)
 
-d2 <- d3 %>% 
+d3 <- d2 %>% 
   select(-lrscale) #We delete columns by simply putting a comma before it
 
 

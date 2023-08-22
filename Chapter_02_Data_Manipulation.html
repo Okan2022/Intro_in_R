@@ -11,7 +11,7 @@
 
 <meta name="author" content="Okan Sarioglu   Leon Siefken" />
 
-<meta name="date" content="2023-08-03" />
+<meta name="date" content="2023-08-22" />
 
 <title>Data Manipulation in R</title>
 
@@ -1482,7 +1482,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">Data Manipulation in R</h1>
 <h4 class="author">Okan Sarioglu <br> Leon Siefken</h4>
-<h4 class="date">2023-08-03</h4>
+<h4 class="date">2023-08-22</h4>
 
 </div>
 
@@ -1648,7 +1648,7 @@ the <code>.dta</code> or <code>.csv</code> format.</p>
 <div id="load-the-data" class="section level3">
 <h3>4.1 Load the data</h3>
 <pre class="r"><code>
-d1 &lt;- read.csv(&quot;data/ESS10.csv&quot;) #If it is not in the same direction than the R-Project, you should specify the the so-called path. Put the path in quotation marks and assign it to an object to work with it easier.
+d1 &lt;- read.csv(&quot;data/ESS10_sub.csv&quot;) #If it is not in the same direction than the R-Project, you should specify the the so-called path. Put the path in quotation marks and assign it to an object to work with it easier.
 
 #This could take some time, since the dataset is huge 
 
@@ -1743,10 +1743,10 @@ scientist are more likely to be willing to get vaccined against
 COVID-19. We want to control for Age, Education, Gender, and the
 Left-Right Position.</p>
 <pre class="r"><code>
-d3 &lt;- d1 %&gt;%
+d2 &lt;- d1 %&gt;%
    select(trstsci, getnvc19, agea, eisced, gndr, lrscale) #Let&#39;s get the for us relevant variables
 
-head(d3) #always check
+head(d2) #always check
 ##   trstsci getnvc19 agea eisced gndr lrscale
 ## 1       8        6   16      1    2       3
 ## 2       4        6   24      7    2       5
@@ -1781,18 +1781,18 @@ head(d2)
 ## 5       5        6   29      1    1       1
 ## 6       8        6   17      2    2       4
 
-d2 &lt;- d3 %&gt;% 
+d3 &lt;- d2 %&gt;% 
   select(-lrscale) #We delete columns by simply putting a comma before it
 
 
 head(d2)
-##   trstsci getnvc19 agea eisced gndr
-## 1       8        6   16      1    2
-## 2       4        6   24      7    2
-## 3       9        6   58      6    1
-## 4       8        6   35      4    1
-## 5       9        6   61      7    1
-## 6       6        6   46      5    2</code></pre>
+##   trstsci getnvc19 agea eisced gndr lrscale
+## 1       8        6   16      1    2       3
+## 2       4        6   24      7    2       5
+## 3       8        6   35      4    1       5
+## 4       7        6   22      4    1       6
+## 5       5        6   29      1    1       1
+## 6       8        6   17      2    2       4</code></pre>
 </div>
 <div id="the-arrange-function" class="section level3">
 <h3>5.3 The <code>arrange()</code> function</h3>
@@ -1928,41 +1928,76 @@ head(d2)
 <p>Our next function helps us to calculate new variables and transoform
 variables in a calculative manner</p>
 <pre class="r"><code>
-d2 &lt;- d3 %&gt;%
+d2 &lt;- d1 %&gt;%
   mutate(trstsci_10 = trstsci*10) #You use the mutate function by first declaring a new variable name, in our case trstsci_10 and then you write down your operation. 
 
 head(d2)
-##   trstsci getnvc19 agea eisced gndr lrscale trstsci_10
-## 1       8        6   16      1    2       3         80
-## 2       4        6   24      7    2       5         40
-## 3       9        6   58      6    1       5         90
-## 4       8        6   35      4    1       5         80
-## 5       9        6   61      7    1       4         90
-## 6       6        6   46      5    2       5         60
+##   X     name essround edition   proddate  idno cntry   dweight   pspwght
+## 1 1 ESS10e03       10       3 08.05.2023 10038    BE 0.8822203 0.9722756
+## 2 2 ESS10e03       10       3 08.05.2023 10053    BE 1.0476425 0.8886350
+## 3 3 ESS10e03       10       3 08.05.2023 10055    BE 1.0877413 0.7228110
+## 4 4 ESS10e03       10       3 08.05.2023 10062    BE 0.9099100 1.0055653
+## 5 5 ESS10e03       10       3 08.05.2023 10064    BE 0.9189489 0.6387054
+## 6 6 ESS10e03       10       3 08.05.2023 10077    BE 0.9137402 0.7061659
+##     pweight  anweight         prob stratum  psu nwspol netusoft netustm ppltrst
+## 1 0.7180754 0.6981671 0.0003968397     188 2596     30        5       8       6
+## 2 0.7180754 0.6381069 0.0003341789     194 2206     10        5     240       3
+## 3 0.7180754 0.5190328 0.0003218596     198 2114    150        5     120       6
+## 4 0.7180754 0.7220717 0.0003847634     150 2645     15        5      90       7
+## 5 0.7180754 0.4586386 0.0003809788     149 2313     60        5     120       3
+## 6 0.7180754 0.5070804 0.0003831505     136 2212     10        5     120       4
+##   pplfair pplhlp polintr agea trstsci getnvc19 eisced gndr lrscale trstsci_10
+## 1       7      4       2   16       8        6      1    2       3         80
+## 2       4      3       4   24       4        6      7    2       5         40
+## 3       8      5       2   58       9        6      6    1       5         90
+## 4       5      5       4   35       8        6      4    1       5         80
+## 5       8      8       1   61       9        6      7    1       4         90
+## 6       4      4       2   46       6        6      5    2       5         60
 
 #We can also combine two or more variables to create another variable and we can change the class of a variable
 
-d2 &lt;- d3 %&gt;% 
+d2 &lt;- d1 %&gt;% 
   mutate(new_variable = trstsci*10/lrscale+67, 
          gndr_char = as.character(gndr))
 
 head(d2)
-##   trstsci getnvc19 agea eisced gndr lrscale new_variable gndr_char
-## 1       8        6   16      1    2       3     93.66667         2
-## 2       4        6   24      7    2       5     75.00000         2
-## 3       9        6   58      6    1       5     85.00000         1
-## 4       8        6   35      4    1       5     83.00000         1
-## 5       9        6   61      7    1       4     89.50000         1
-## 6       6        6   46      5    2       5     79.00000         2</code></pre>
+##   X     name essround edition   proddate  idno cntry   dweight   pspwght
+## 1 1 ESS10e03       10       3 08.05.2023 10038    BE 0.8822203 0.9722756
+## 2 2 ESS10e03       10       3 08.05.2023 10053    BE 1.0476425 0.8886350
+## 3 3 ESS10e03       10       3 08.05.2023 10055    BE 1.0877413 0.7228110
+## 4 4 ESS10e03       10       3 08.05.2023 10062    BE 0.9099100 1.0055653
+## 5 5 ESS10e03       10       3 08.05.2023 10064    BE 0.9189489 0.6387054
+## 6 6 ESS10e03       10       3 08.05.2023 10077    BE 0.9137402 0.7061659
+##     pweight  anweight         prob stratum  psu nwspol netusoft netustm ppltrst
+## 1 0.7180754 0.6981671 0.0003968397     188 2596     30        5       8       6
+## 2 0.7180754 0.6381069 0.0003341789     194 2206     10        5     240       3
+## 3 0.7180754 0.5190328 0.0003218596     198 2114    150        5     120       6
+## 4 0.7180754 0.7220717 0.0003847634     150 2645     15        5      90       7
+## 5 0.7180754 0.4586386 0.0003809788     149 2313     60        5     120       3
+## 6 0.7180754 0.5070804 0.0003831505     136 2212     10        5     120       4
+##   pplfair pplhlp polintr agea trstsci getnvc19 eisced gndr lrscale new_variable
+## 1       7      4       2   16       8        6      1    2       3     93.66667
+## 2       4      3       4   24       4        6      7    2       5     75.00000
+## 3       8      5       2   58       9        6      6    1       5     85.00000
+## 4       5      5       4   35       8        6      4    1       5     83.00000
+## 5       8      8       1   61       9        6      7    1       4     89.50000
+## 6       4      4       2   46       6        6      5    2       5     79.00000
+##   gndr_char
+## 1         2
+## 2         2
+## 3         1
+## 4         1
+## 5         1
+## 6         2</code></pre>
 <div id="recoding-with-mutate-using-recode" class="section level4">
 <h4>5.5.1 Recoding with <code>mutate()</code> using
 <code>recode()</code></h4>
 <pre class="r"><code>
 #The recode() function can be used to convert a variable, this is particulary useful, if we have an empirical strategy, which requires that or if we want to make new variables with new classes out of it: 
 
-d2 &lt;- d3 %&gt;% 
+d2 &lt;- d1 %&gt;% 
   mutate(
-    gndr_fac = as.factor(gndr),
+    gndr_fac = as.factor(gndr), #always check the class 
     lr_cat = recode(lrscale,
                     `0` = 0,
                     `1` = 0,
@@ -2002,7 +2037,7 @@ table(d2$gender)
 <strong>tidyverse</strong> offers a way more intuitive command, the
 <code>case_when()</code> function:</p>
 <pre class="r"><code>
-d2 &lt;- d3 %&gt;% 
+d2 &lt;- d1 %&gt;% 
   mutate(gndr = as.factor(gndr),
     lr_cat = case_when(
     lrscale &lt; 5 ~ 0,
@@ -2034,7 +2069,7 @@ mentioned, the <code>case_when()</code> command is a generalized
 <code>ifelse()</code> function. If you want to keep it old school, we
 can also recode with the <code>ifelse()</code> function:</p>
 <pre class="r"><code>
-d2 &lt;- d3 %&gt;% 
+d2 &lt;- d1 %&gt;% 
   mutate(gndr = as.factor(gndr),
          lr_cat = ifelse(lrscale &lt; 5, 0, 
                             ifelse(lrscale == 5, 1, 
@@ -2076,18 +2111,15 @@ multiple imputation techniques, you will learn that in AQM.</p></li>
 missing values</p></li>
 </ul>
 <p>We will do the second one, and I already showed how to recode useless
-values to NAs so this should be clear by now. In the following code.
-Remember, the <code>ifelse()</code> und <code>recode</code> explicitly
-need input to turn values into NAs, <code>case_when()</code> however,
-turns values, which are not explicitly stated into NAs.</p>
-<pre class="r"><code>
+values to NAs so this should be clear by now. Remember, the
+<code>ifelse()</code> und <code>recode</code> explicitly need input to
+turn values into NAs.</p>
+<pre class="r"><code>#For that we take our dataset d1 
 
-#For that we take our dataset d6 
-
-d3 &lt;- d3 %&gt;% 
+d1 &lt;- d1 %&gt;% 
   drop_na() #The command drop_na() drops all missing rows with missing values. The base R command is na.omit() and does the same.
 
-d3.1 &lt;- na.omit(d3) </code></pre>
+d1 &lt;- na.omit(d1) </code></pre>
 <p>Now we have all ingredients to make our dataset. Do you remember our
 research question? We want to find out if people, who tend to not trust
 science are less willing to get vaccinated. We want to do that for all
