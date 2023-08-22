@@ -3,12 +3,12 @@ title: "Data Visualization"
 author: "Okan Sarioglu <br> Leon Siefken"
 date: "`r Sys.Date()`"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     toc: true
     toc_float: true
     css: css/lab.css
+  pdf_document:
+    toc: yes
   html_notebook:
     toc: true
     toc_float: true
@@ -31,8 +31,7 @@ To make the introduction of GGPlot2 more intersting, we will also introduce anot
 Our goal with this data today, is to visualize the development of democracy over the years. Can we see the "Waves of Democratization" as theorized by Huntington? And if so, what kind of wave are we in right now, increasing or decreasing democratization? 
 
 ```{r vdem}
-setwd("C:/Users/leons/Desktop/R Intro/Data")
-vdem <- read.csv("vdem_subset.csv")
+vdem <- read.csv("data/vdem_subset.csv")
 ```
 ## 3. Making a Plot
 

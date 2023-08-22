@@ -3,12 +3,12 @@ title: "Exploratory Data Analysis"
 author: "Okan Sarioglu <br> Leon Siefken"
 date: "`r Sys.Date()`"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     toc: true
     toc_float: true
     css: css/lab.css
+  pdf_document:
+    toc: yes
   html_notebook:
     toc: true
     toc_float: true
@@ -22,11 +22,13 @@ output:
 Initially developed for psychological research, the `psych` Package will prove helpful for us in political science. Next to data visualization, factor analysis, reliability analysis and correlation analysis, this package will also help us to get an overview of hour datasets that we're working with. Getting a general look at your data is essential for getting a deeper understanding of what you are working with.
 We will also need the `tidyverse` and `haven`.
 
-```{r inst, eval=FALSE}
+```{r}
 install.packages("psych")
 install.packages("ineq")
 install.packages("corrplot")
 ```
+
+
 
 ```{r}
 pacman::p_load("tidyverse","haven","psych","ineq","corrplot")
@@ -41,9 +43,8 @@ Analyzing political parties, their positions and their election results is among
 - ParlGov has collected data on a variety of countries, their elections, their outcome and the resulting cabinets. Generally, they provide an expansive data collection on elections and their results. [Website](https://www.parlgov.org/)
 
 ```{r data}
-setwd("C:/Users/leons/Desktop/R Intro/Data")
-pop <- read_dta("party_means.dta")
-parl <- read.csv("parlgov_election.csv")
+pop <- read_dta("data/party_means.dta")
+parl <- read.csv("data/parlgov_election.csv")
 ```
 
 ### 2.1 Merging the Datasets
@@ -51,7 +52,8 @@ parl <- read.csv("parlgov_election.csv")
 To get a complete dataset on party positions and the parties' vote shares, we will need to merge the two datasets. Do you remember how to do that? To our luck, it just so happens that the POPPA data includes a variable that has the ParlGov ID of every party, making merging easy for us. However, as POPPA only measures party positions at around 2018, we have to limit ParlGov to this timeframe. 
 
 ```{r merge}
-parl18 <- parl %>% filter(election_date <= 2019) %>% filter(election_date >= 2017)
+parl18 <- parl %>% 
+  filter(election_date <= 2019 & election_date >= 2017) 
 
 comp <- left_join(parl18, pop, by = c("party_id" = "parlgov_id"))
 ```
@@ -88,11 +90,13 @@ We can now see that, while the vote share does vary a lot, most parties receive 
 ```{r quantiles}
 quantile(comp$vote_share, na.rm = T)
 ```
+
 How to interpret this? As explained earlier, imagine all observations arranged from lowest to highest. Now we make three cuts into this arrangement: at 25%, 50%, and 100%. Now we can see which values lay at the borders. But we can also intrpret it like this: 25% percent of parties receive a share of 2.4% or lower, thus 75% of parties receive a vote share of 2.4% or higher! The same we can do with the other quantiles. 75% of parties had a vote share of 13% or lower, while 25% of parties had a vote share of 13% or higher. These are interesting insights! While it is common to have 5 values as quintiles, you can also set the borders yourself.
 
 ```{r qunit}
 quantile(comp$vote_share,probs = c(0.2,0.4,0.6,0.8), na.rm = T)
 ```
+
 How would you interpret this?
 
 And lastly, another common measure is the Inter Quartile Range (IQR), which simply measures the range between the 25% and the 75% quantiles, to get an idea of the distribution of the variable. Note: It will still say 75%, which is, however, not correct of course. Just ignore it. 
@@ -120,14 +124,20 @@ However, this becomes more interesting when comparing different countries.
 
 ```{r gini comp}
 unique(comp$country_name) #Shows us all unique values in this variable!
-neth <- comp %>% filter(comp$country_name == "Netherlands")
-uk <- comp %>% filter(comp$country_name == "United Kingdom")
-ger <- comp %>% filter(comp$country_name == "Germany")
+neth <- comp %>% 
+  filter(comp$country_name == "Netherlands")
+
+uk <- comp %>% 
+  filter(comp$country_name == "United Kingdom")
+
+ger <- comp %>% 
+  filter(comp$country_name == "Germany")
 
 Gini(neth$vote_share)
 Gini(uk$vote_share)
 Gini(ger$vote_share)
 ```
+
 As expected, the UK with it's majoritarian electoral system has the highest inequality when it comes to the distribution of vote shares among parties, while the countries with representative system lie at a gini of around 40%, which is lower than the general Gini we calculated before.
 
 
@@ -184,8 +194,11 @@ comp <- comp %>%
   mutate(seat_share = seats / sum(seats))
 
 comp$cat_seat <- cut(comp$seat_share,
-                       breaks=c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
-                       labels=c('0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79',
+                       breaks=c(0, 0.1, 0.2, 0.3, 0.4, 
+                                0.5, 0.6, 0.7, 0.8, 0.9, 1),
+                       labels=c('0-9', '10-19', '20-29',
+                                '30-39', '40-49', '50-59',
+                                '60-69', '70-79',
                                 '80-89', '90-100'))
 
 t3 <- xtabs(~comp$cat_vote+comp$cat_seat)
