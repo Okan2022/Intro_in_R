@@ -243,7 +243,7 @@ We obviously do not care about all variables a dataset can offer (mostly). To se
  
 ```{r}
 
-d3 <- d1 %>%
+d2 <- d1 %>%
    select(trstsci, getnvc19, agea, eisced, gndr, lrscale) #Let's get the for us relevant variables
 
 head(d3) #always check
@@ -370,14 +370,14 @@ Our next function helps us to calculate new variables and transoform variables i
 
 ```{r}
 
-d2 <- d3 %>%
+d2 <- d1 %>%
   mutate(trstsci_10 = trstsci*10) #You use the mutate function by first declaring a new variable name, in our case trstsci_10 and then you write down your operation. 
 
 head(d2)
 
 #We can also combine two or more variables to create another variable and we can change the class of a variable
 
-d2 <- d3 %>% 
+d2 <- d1 %>% 
   mutate(new_variable = trstsci*10/lrscale+67, 
          gndr_char = as.character(gndr))
 
@@ -392,9 +392,9 @@ head(d2)
 
 #The recode() function can be used to convert a variable, this is particulary useful, if we have an empirical strategy, which requires that or if we want to make new variables with new classes out of it: 
 
-d2 <- d3 %>% 
+d2 <- d1 %>% 
   mutate(
-    gndr_fac = as.factor(gndr),
+    gndr_fac = as.factor(gndr), #always check the class 
     lr_cat = recode(lrscale,
                     `0` = 0,
                     `1` = 0,
@@ -429,7 +429,7 @@ As you see, the `recode()` command is quite extensive. The **tidyverse** offers 
 
 ```{r}
 
-d2 <- d3 %>% 
+d2 <- d1 %>% 
   mutate(gndr = as.factor(gndr),
     lr_cat = case_when(
     lrscale < 5 ~ 0,
@@ -455,7 +455,7 @@ Do you remember the `ifelse()` function? As already mentioned, the `case_when()`
 
 ```{r}
 
-d2 <- d3 %>% 
+d2 <- d1 %>% 
   mutate(gndr = as.factor(gndr),
          lr_cat = ifelse(lrscale < 5, 0, 
                             ifelse(lrscale == 5, 1, 
@@ -480,23 +480,20 @@ As you saw right now, not all data in a dataset is complete. Of course not, ther
 
 For us, this is a problem, because we cannot run an analysis with missing values. There are two options: 
 
-+ Using statistics to artificially fill them out, this called multiple
-imputation techniques, you will learn that in AQM. 
++ Using statistics to artificially fill them out, this called multiple imputation techniques, you will learn that in AQM. 
 
 + Just delete incomplete observations to have a dataset without missing values
 
-We will do the second one, and I already showed how to recode useless values to NAs so this should be clear by now. In the following code. Remember, the `ifelse()` und `recode` explicitly need input to turn values into NAs, `case_when()` however, turns values, which are not explicitly stated into NAs.
+We will do the second one, and I already showed how to recode useless values to NAs so this should be clear by now. Remember, the `ifelse()` und `recode` explicitly need input to turn values into NAs.
 
 
 ```{r}
+#For that we take our dataset d1 
 
-
-#For that we take our dataset d6 
-
-d3 <- d3 %>% 
+d1 <- d1 %>% 
   drop_na() #The command drop_na() drops all missing rows with missing values. The base R command is na.omit() and does the same.
 
-d3.1 <- na.omit(d3) 
+d1 <- na.omit(d1) 
 
 ```
 
