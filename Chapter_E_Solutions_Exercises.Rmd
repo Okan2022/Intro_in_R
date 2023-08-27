@@ -15,7 +15,38 @@ output:
     css: css/lab.css
 ---
 
-#Chapter E: Solution Exercises 
+##Chapter E: Solution Exercises 
+
+### Loading all necessary stuff 
+
+```{r}
+
+#======================Exercise 2===========================#
+pacman::p_load("tidyverse", "gapminder", "WDI", "haven",
+               "psych", "ineq","corrplot")
+d1 <- read.csv("data/ESS10_sub.csv")
+countries <- c("HU", "FR", "DE", "US")
+indicators = c("NY.GDP.PCAP.CD", "TX.VAL.FUEL.ZS.UN", "EN.ATM.CO2E.KT")
+wb <- WDI( 
+  country = countries, #We include our countries 
+  indicator = indicators, #We include our variables 
+  start = 1960, #start date 
+  end = 2023) #end date 
+#============================================================#
+
+#====================Exercise 3=============================#
+pop <- read_dta("data/party_means.dta")
+parl <- read.csv("data/parlgov_election.csv")
+parl18 <- parl %>% 
+  filter(election_date <= 2019 & election_date >= 2017) 
+comp <- left_join(parl18, pop, by = c("party_id" = "parlgov_id"))
+
+#===================Exercise 4==============================#
+vdem <- read.csv("data/vdem_subset.csv")
+
+```
+
+
 
 ## Exercises Chapter 1: 
 

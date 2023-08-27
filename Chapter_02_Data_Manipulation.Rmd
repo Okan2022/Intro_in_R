@@ -43,6 +43,7 @@ required once.
 
 install.packages("tidyverse") #You need to put the name of the package into quotation marks 
 install.packages("haven") #This is a package which helps to read different types of data into R 
+install.packages("pacman")
 
 
 ```
