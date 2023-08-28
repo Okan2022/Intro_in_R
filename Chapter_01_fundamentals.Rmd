@@ -411,6 +411,7 @@ One of the most frequently used and therefore most important logical operators i
 ### 4.1 Simple if command 
 
 ![**Figure 2: Standard RStudio Interface**](images/r-if-statement.jpg)
+
 This is the logic of a simple **if statement**. If a test expression is met, then the body of it (logical consequence) should happen
 
 ```{r}
